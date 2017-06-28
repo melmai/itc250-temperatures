@@ -83,7 +83,7 @@
 
                 </tr>    
                 <tr>
-                    <td id="button"><button type="submit" onclick="Convert" value="Convert"> Convert  </button>
+                    <td id="button"><button type="submit" onclick="Convert" value="Convert">Convert</button>
                         <button type="reset" value="Reset">Reset</button></td>
                 </tr>
             </table>
