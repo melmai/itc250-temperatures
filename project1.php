@@ -32,42 +32,45 @@
             $input="";
         }
         
-        if (isset($_POST['submit'])) {
-            if(isset($_POST['DegreesIn']))
-                {
-                echo "You have selected :".$_POST['DegreesIn'];  
-//  Displaying Selected Value
-            }
-        }
-//pseudocode
-        function Convert($input){
-            $output="";
-            if (DegreesIn == "Celsius" && DegreesOut == "Celsius"){
-                $output=$input;
-            }else if (DegreesIn == "Celsius" && DegreesOut == "Fahrenheit"){
-                $output= ConvertCelsiusToFahrenheit;
-            } else if (DegreesIn == "Celsius" && DegreesOut == "Kelvin"){
-                $output= ConvertCelsiusToKelvin;
-            } else if (DegreesIn == "Fahrenheit" && DegreesOut == "Celsius"){
-                $output= ConvertFahrenheitToCelsius;
-            } else if (DegreesIn == "Fahrenheit" && DegreesOut == "Fahrenheit"){
-                $output=$input;
-            } else if (DegreesIn == "Fahrenheit" && DegreesOut == "Kelvin"){
-                $output= ConvertFahrenheitToKelvin;
-            } else if (DegreesIn == "Kelvin" && DegreesOut == "Celsius"){
-                $output= ConvertKelvinToCelsius;
-            } else if (DegreesIn == "Kelvin" && DegreesOut == "Fahrenheit"){
-                $output= ConvertKelvinToFahrenheit;
-            } else if (DegreesIn == "Kelvin" && DegreesOut == "Kelvin"){
-                $output=$input;
-            }
-            return $output;
+        if(isset($_POST["Convert"])){
+            $output=Convert($input);
         }
         
+        function Convert($input){
+            $output="";
+            if ($_POST['DegreesIn'] == "Celsius" && $_POST['DegreesOut'] == "Celsius"){
+                $output=$input;
+                return $output;
+            }else if ($_POST['DegreesIn'] == "Celsius" && $_POST['DegreesOut'] == "Fahrenheit"){
+                $output= $input*9/5+32;
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Celsius" && $_POST['DegreesOut'] == "Kelvin"){
+                $output= $input+273.15;
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Fahrenheit" && $_POST['DegreesOut'] == "Celsius"){
+                $output= FahrenheitToCelsius($input);
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Fahrenheit" && $_POST['DegreesOut'] == "Fahrenheit"){
+                $output=$input;
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Fahrenheit" && $_POST['DegreesOut'] == "Kelvin"){
+                $output= FahrenheitToKelvin;
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Kelvin" && $_POST['DegreesOut'] == "Celsius"){
+                $output= KelvinToCelsius;
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Kelvin" && $_POST['DegreesOut'] == "Fahrenheit"){
+                $output= KelvinToFahrenheit;
+                return $output;
+            } else if ($_POST['DegreesIn'] == "Kelvin" && $_POST['DegreesOut'] == "Kelvin"){
+                $output=$input;
+            }
+        }
+           
         ?>
         
         <h1>Temperature Converter</h1>
-        <form action='project1.php' method="post">
+        <form action="<?php echo $_SERVER[’PHP_SELF’]; ?>" method="post">
             <table>    
                 <tr>
                     <td><h3>Convert from:</h3></td>
@@ -79,11 +82,11 @@
                     <td><input type="radio" name="DegreesOut" value="Celsius" checked="checked">Celsius<br>
                         <input type="radio" name="DegreesOut" value="Fahrenheit">Fahrenheit<br>
                         <input type="radio" name="DegreesOut" value="Kelvin">Kelvin<br></td>
-                        <td><input type="text" name="output" size="6" value=" "></td>
+                        <td><input type="text" name="output" size="6" value="$output"></td>
 
                 </tr>    
                 <tr>
-                    <td id="button"><button type="submit" onclick="Convert" value="Convert">Convert</button>
+                    <td id="button"><button type="submit" value="Convert">Convert</button>
                         <button type="reset" value="Reset">Reset</button></td>
                 </tr>
             </table>
