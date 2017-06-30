@@ -1,5 +1,5 @@
 <head>
-    <title>Convert Temperature</title> 
+    <title>Convert Temperature</title>
     <style>
         h1 {
             text-align: center;
@@ -37,13 +37,13 @@
             $output= $input+273.15;
             return $output;
         } else if ($degreesIn == "Fahrenheit" && $degreesOut == "Celsius"){
-                $output= FahrenheitToCelsius($input);
+            $output = ($input - 32) * (5/9);
             return $output;
         } else if ($degreesIn == "Fahrenheit" && $degreesOut == "Fahrenheit"){
             $output=$input;
             return $output;
         } else if ($degreesIn == "Fahrenheit" && $degreesOut == "Kelvin"){
-            $output= FahrenheitToKelvin;
+            $output = ($input - 32) * (5/9) + 273.15;
             return $output;
         } else if ($degreesIn == "Kelvin" && $degreesOut == "Celsius"){
             $output= KelvinToCelsius;
@@ -56,24 +56,24 @@
         }
      }
 
-// Gets and sets input and output values, rounds input to 2 decimal values, 
+// Gets and sets input and output values, rounds input to 2 decimal values,
 // uses number_format for output to display 2 decimal values even when output is an integer
 
      if(isset($_POST["Convert"])){
-        $input =  $_POST['input']; 
-        $input = round($input,2); 
+        $input =  $_POST['input'];
+        $input = round($input,2);
         $degreesIn = $_POST['DegreesIn'];
         $degreesOut = $_POST['DegreesOut'];
-        $output = Convert($degreesIn, $degreesOut, $input); 
+        $output = Convert($degreesIn, $degreesOut, $input);
         $output = number_format($output, 2);
-         
-    } 
-?> 
+
+    }
+?>
 
 <body>
     <h1>Temperature Converter</h1>
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-      <table>    
+      <table>
             <tr>
                 <td><h3>Convert from:</h3></td>
                 <td><input type="text" name="input" size="6"></td>
@@ -84,18 +84,18 @@
                 <td><input type="radio" name="DegreesOut" value="Celsius" checked="checked">Celsius<br>
                     <input type="radio" name="DegreesOut" value="Fahrenheit">Fahrenheit<br>
                     <input type="radio" name="DegreesOut" value="Kelvin">Kelvin<br></td>
-            </tr>    
+            </tr>
             <tr>
                 <td id="button"><button type="submit" name="Convert" value="Convert">Convert</button></td>
             </tr>
         </table>
-        
-    </form>    
+
+    </form>
     <h3><?php
-            // validated that input is numeric and outputs either result or in case of 
+            // validated that input is numeric and outputs either result or in case of
             // no input/invalid input prompts user to enter a number
             if (isset ($_POST['input']) && is_numeric($_POST['input'])){
-                echo number_format($input, 2) . ' degrees ' . $degreesIn . ' is ' . $output . ' degrees ' . $degreesOut . '.';        
+                echo number_format($input, 2) . ' degrees ' . $degreesIn . ' is ' . $output . ' degrees ' . $degreesOut . '.';
             }
             else {
                 echo "<font color=red>Please enter a number!</font>";
@@ -103,4 +103,3 @@
         ?>
     </h3>
 </body>
-
