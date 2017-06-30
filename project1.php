@@ -21,6 +21,9 @@
         }
     </style>
 </head>
+
+// function to convert degrees based on radio boxes checked
+
 <?php
      function Convert($degreesIn, $degreesOut, $input){
         $output="";
@@ -52,12 +55,18 @@
             $output=$input;
         }
      }
-    
+
+// Gets and sets input and output values, rounds input to 2 decimal values, 
+// uses number_format for output to display 2 decimal values even when output is an integer
+
      if(isset($_POST["Convert"])){
-        $input =  $_POST['input'];     
+        $input =  $_POST['input']; 
+        $input = round($input,2); 
         $degreesIn = $_POST['DegreesIn'];
         $degreesOut = $_POST['DegreesOut'];
-        $output = Convert($degreesIn, $degreesOut, $input);           
+        $output = Convert($degreesIn, $degreesOut, $input); 
+        $output = number_format($output, 2);
+         
     } 
 ?> 
 
@@ -81,10 +90,12 @@
             </tr>
         </table>
         
-    </form>
+    </form>    
     <h3><?php
+            // validated that input is numeric and outputs either result or in case of 
+            // no input/invalid input prompts user to enter a number
             if (isset ($_POST['input']) && is_numeric($_POST['input'])){
-                echo $input . ' degrees ' . $degreesIn . ' is ' . $output . ' degrees ' . $degreesOut . '.';        
+                echo number_format($input, 2) . ' degrees ' . $degreesIn . ' is ' . $output . ' degrees ' . $degreesOut . '.';        
             }
             else {
                 echo "<font color=red>Please enter a number!</font>";
