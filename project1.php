@@ -3,8 +3,8 @@
     <style>
         h1 {
             text-align: center;
-            padding-top: 25px
-            padding: 16p;
+            padding-top: 25px;
+            padding: 16px;
         }
         h3 {
             text-align: center;
