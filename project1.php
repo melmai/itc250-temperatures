@@ -23,8 +23,8 @@
 </head>
 <body>
     <h1>Temperature Converter</h1>
-    <form action="<?php ' . THIS_PAGE . ' ?>" method="post">
-        <table>    
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+      <table>    
             <tr>
                 <td><h3>Convert from:</h3></td>
                 <td><input type="text" name="input" size="6"></td>
@@ -35,57 +35,54 @@
                 <td><input type="radio" name="DegreesOut" value="Celsius" checked="checked">Celsius<br>
                     <input type="radio" name="DegreesOut" value="Fahrenheit">Fahrenheit<br>
                     <input type="radio" name="DegreesOut" value="Kelvin">Kelvin<br></td>
-                <td><?php $output ?></td>
+                <td><?php echo Convert($degreesIn, $degreesOut, $input); ?></td>
             </tr>    
             <tr>
-                <td id="button"><button type="submit"  value="Convert">Convert</button>
+                <td id="button"><button type="submit" name="Convert" value="Convert">Convert</button>
                     <button type="reset" value="Reset">Reset</button></td>
             </tr>
         </table>
     </form>    
 </body>
+
 <?php
-
-    define('THIS_PAGE', basename($_SERVER['PHP_SELF']));
-
-    if (isset($_POST['input'])) {
-        $input =  $_POST['input'];
-    } else {
-        $input="";
-    }
-        
-    if(isset($_POST["Convert"])){
-        $output=Convert($input);
-    }
     
-    function Convert($input){
+    function Convert($degreesIn, $degreesOut, $input){
         $output="";
-        if ($_POST['DegreesIn'] == "Celsius" && $_POST['DegreesOut'] == "Celsius"){
+        if ($degreesIn == "Celsius" && $degreesOut == "Celsius"){
             $output=$input;
-            return $output;
-        }else if ($_POST['DegreesIn'] == "Celsius" && $_POST['DegreesOut'] == "Fahrenheit"){
+            echo $output;
+        }else if ($degreesIn == "Celsius" && $degreesOut == "Fahrenheit"){
             $output= $input*9/5+32;
             return $output;
-        } else if ($_POST['DegreesIn'] == "Celsius" && $_POST['DegreesOut'] == "Kelvin"){
+        } else if ($degreesIn == "Celsius" && $degreesOut == "Kelvin"){
             $output= $input+273.15;
             return $output;
-        } else if ($_POST['DegreesIn'] == "Fahrenheit" && $_POST['DegreesOut'] == "Celsius"){
+        } else if ($degreesIn == "Fahrenheit" && $degreesOut == "Celsius"){
                 $output= FahrenheitToCelsius($input);
             return $output;
-        } else if ($_POST['DegreesIn'] == "Fahrenheit" && $_POST['DegreesOut'] == "Fahrenheit"){
+        } else if ($degreesIn == "Fahrenheit" && $degreesOut == "Fahrenheit"){
             $output=$input;
             return $output;
-        } else if ($_POST['DegreesIn'] == "Fahrenheit" && $_POST['DegreesOut'] == "Kelvin"){
+        } else if ($degreesIn == "Fahrenheit" && $degreesOut == "Kelvin"){
             $output= FahrenheitToKelvin;
             return $output;
-        } else if ($_POST['DegreesIn'] == "Kelvin" && $_POST['DegreesOut'] == "Celsius"){
+        } else if ($degreesIn == "Kelvin" && $degreesOut == "Celsius"){
             $output= KelvinToCelsius;
             return $output;
-        } else if ($_POST['DegreesIn'] == "Kelvin" && $_POST['DegreesOut'] == "Fahrenheit"){
+        } else if ($degreesIn == "Kelvin" && $degreesOut == "Fahrenheit"){
             $output= KelvinToFahrenheit;
             return $output;
-        } else if ($_POST['DegreesIn'] == "Kelvin" && $_POST['DegreesOut'] == "Kelvin"){
+        } else if ($degreesIn == "Kelvin" && $degreesOut == "Kelvin"){
             $output=$input;
         }
      }
+    
+    
+     if(isset($_POST["Convert"])){
+            $input =  $_POST['input'];
+            $degreesIn = $_POST['DegreesIn'];
+            $degreesOut = $_POST['DegreesOut'];
+            echo Convert($degreesIn, $degreesOut, $input);   
+     } 
 ?> 
