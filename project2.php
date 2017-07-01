@@ -16,6 +16,36 @@
 //create constant to refer to name of current page
 define('THIS_PAGE', basename($_SERVER['PHP_SELF']));
 
+//show form for calculations
+echo '
+    <h1>Temperature Converter</h1>
+    <p>Please enter a numeric value in the box below and select the corresponding temperature formats.</p>
+    <form action="' . THIS_PAGE . '" method="post">
+        <div id="values">
+            <input type="text" name="inputValue" />
+
+            <div id="input-options">
+                <input type="radio" name="inputType" value="Fahrenheit"> Fahrenheit<br />
+                <input type="radio" name="inputType" value="Celsius"> Celsius<br />
+                <input type="radio" name="inputType" value="Kelvin"> Kelvin<br />
+            </div> <!-- #input-options -->
+
+            <p>to</p>
+
+            <div id="output-options">
+                <input type="radio" name="outputType" value="Fahrenheit"> Fahrenheit<br />
+                <input type="radio" name="outputType" value="Celsius"> Celsius<br />
+                <input type="radio" name="outputType" value="Kelvin"> Kelvin<br />
+            </div> <!-- #output-options -->
+        </div> <!-- #values -->
+
+        <div id="buttons">
+            <input type="submit" name="submit" value="Convert" />
+            <button href="' . THIS_PAGE . '">Reset</button>
+        </div> <!-- #buttons -->
+    </form>
+';
+
 //IF DATA IS SUBMITTED, SHOW RESULTS
 if(isset($_POST['submit'])) {
 
@@ -58,76 +88,16 @@ if(isset($_POST['submit'])) {
         }
     }
 
-    //show form for additional calculations
-    echo '
-        <h1>Temperature Converter</h1>
-        <p>Please enter a numeric value in the box below and select the corresponding temperature formats.</p>
-        <form action="' . THIS_PAGE . '" method="post">
-            <div id="values">
-                <input type="text" name="inputValue" />
-
-                <div id="input-options">
-                    <input type="radio" name="inputType" value="Fahrenheit"> Fahrenheit<br />
-                    <input type="radio" name="inputType" value="Celsius"> Celsius<br />
-                    <input type="radio" name="inputType" value="Kelvin"> Kelvin<br />
-                </div> <!-- #input-options -->
-
-                <p>to</p>
-
-                <div id="output-options">
-                    <input type="radio" name="outputType" value="Fahrenheit"> Fahrenheit<br />
-                    <input type="radio" name="outputType" value="Celsius"> Celsius<br />
-                    <input type="radio" name="outputType" value="Kelvin"> Kelvin<br />
-                </div> <!-- #output-options -->
-            </div> <!-- #values -->
-
-            <div id="buttons">
-                <input type="submit" name="submit" value="Convert" />
-                <button href="' . THIS_PAGE . '">Reset</button>
-            </div> <!-- #buttons -->
-        </form>
-    ';
-
     if (!is_numeric($inputValue)) { //if input is not numeric, show error message
         echo '<p id="result" class="invalid">Please enter a valid number</p>';
     } else if (!isset($inputType) || !isset($outputType)) { //if temperature scales not selected, show error message
         echo '<p id="result" class="invalid">Please select temperature scales for both input and output.</p>';
     } else { //else calculate value and show
-        $outputValue = round(convert($inputType, $outputType, $inputValue), 2);
+        $outputValue = number_format(convert($inputType, $outputType, $inputValue), 2);
         echo '<p id="result" class="valid"> ' . $inputValue . '&#176;' . $inputType . ' is ' . $outputValue . '&#176;' . $outputType . '</p>';
     }
-
-//IF DATA NOT SUBMITTED, SHOW FORM
-} else {
-    echo '
-        <h1>Temperature Converter</h1>
-        <p>Please enter a numeric value in the box below and select the corresponding temperature formats.</p>
-        <form action="' . THIS_PAGE . '" method="post">
-            <div id="values">
-                <input type="text" name="inputValue" />
-
-                <div id="input-options">
-                    <input type="radio" name="inputType" value="Fahrenheit"> Fahrenheit<br />
-                    <input type="radio" name="inputType" value="Celsius"> Celsius<br />
-                    <input type="radio" name="inputType" value="Kelvin"> Kelvin<br />
-                </div> <!-- #input-options -->
-
-                <p>to</p>
-
-                <div id="output-options">
-                    <input type="radio" name="outputType" value="Fahrenheit"> Fahrenheit<br />
-                    <input type="radio" name="outputType" value="Celsius"> Celsius<br />
-                    <input type="radio" name="outputType" value="Kelvin"> Kelvin<br />
-                </div> <!-- #output-options -->
-            </div> <!-- #values -->
-
-            <div id="buttons">
-                <input type="submit" name="submit" value="Convert" />
-                <button href="' . THIS_PAGE . '">Reset</button>
-            </div> <!-- #buttons -->
-        </form>
-    ';
 }
+
 ?>
 </body>
 </html>
