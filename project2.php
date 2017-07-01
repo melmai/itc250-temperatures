@@ -1,7 +1,6 @@
 <html>
 <head>
     <title>P1: Temperature Converter</title>
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Walter+Turncoat" rel="stylesheet">
 
@@ -33,26 +32,26 @@ if(isset($_POST['submit'])) {
             $outputValue = $inputValue; //return input as output
             return $outputValue;
 
-        } else if ($inputType == "Kelvin") { //from Kelvin
-            if($outputType == "Fahrenheit") { //to Fahrenheit
+        } else if ($inputType == "Kelvin") { //else if input: K
+            if($outputType == "Fahrenheit") { //K to F
                 $outputValue = ($inputValue - 273.15) * (9/5) + 32;
-            } else { //to Celsius
+            } else { //else K to C
                 $outputValue = $inputValue - 273.15;
             }
             return $outputValue;
 
-        } else if ($inputType == "Celsius") { //from Celsius
-            if($outputType == "Fahrenheit") { //to Fahrenheit
+        } else if ($inputType == "Celsius") { //else if input: C
+            if($outputType == "Fahrenheit") { //C to F
                 $outputValue = $inputValue * 9/5 + 32;
-            } else { //to Kelvin
+            } else { //else C to K
                 $outputValue = $inputValue + 273.15;
             }
             return $outputValue;
 
-        } else { //from Fahrenheit
-            if($outputType == "Celsius") { //to Celsius
+        } else { //else input: F
+            if($outputType == "Celsius") { //F to C
                 $outputValue = ($inputValue - 32) * (5/9);
-            } else { //to Kelvin
+            } else { //else F to K
                 $outputValue = ($inputValue - 32) * (5/9) + 273.15;
             }
             return $outputValue;
@@ -89,9 +88,10 @@ if(isset($_POST['submit'])) {
         </form>
     ';
 
-    //if input is not numeric, show error message
-    if (!is_numeric($inputValue)) {
+    if (!is_numeric($inputValue)) { //if input is not numeric, show error message
         echo '<p id="result" class="invalid">Please enter a valid number</p>';
+    } else if (!isset($inputType) || !isset($outputType)) { //if temperature scales not selected, show error message
+        echo '<p id="result" class="invalid">Please select temperature scales for both input and output.</p>';
     } else { //else calculate value and show
         $outputValue = round(convert($inputType, $outputType, $inputValue), 2);
         echo '<p id="result" class="valid"> ' . $inputValue . '&#176;' . $inputType . ' is ' . $outputValue . '&#176;' . $outputType . '</p>';
